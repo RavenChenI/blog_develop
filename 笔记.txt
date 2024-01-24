@@ -1,0 +1,105 @@
+虚拟环境：
+（1）不同项目应用不同技术，其技术底层引用可能有冲突，所以需要环境隔离
+（2）不同的项目可能用到相同的库，但是版本不同
+
+Requirements.txt 用于保存原有的library
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+MVC开发模型
+（1）M就是model，指的是模型层，用来书写数据库对应模型
+（2）V就是view，指的是视图层，用来书写展示给用户部分的代码
+（3）C就是controller,指的是控制层，用来书写控制业务逻辑的代码
+
+每一个功能对应相应的接口，对应操作的底层数据（MySQL， Linux部署）
+
+
+View                  首页                 文章详情页                用户界面
+Controller 展示文章 用户信息 文章筛选      文章详情 评论 点赞等     用户信息  文章的操作
+
+Model              用户相关接口             文章相关接口              评论相关接口
+                 用户模型操作（类）          文章操作模型              评论相关模型
+
+                                         MySQL数据库
+                                         Linux服务器
+
+蓝图：用于把app应用模块化，就是把各个模块的路由绑定到模块蓝图上，然后再把蓝图加载到app应用上
+
+Blueprint用于连接 各个模块
+#在main.py
+from controller.user import user
+app.register_blueprint(user)
+
+#在user.py
+user = Blueprint("user",__name__)
+
+拦截器 e.g登录前/登录后
+全局拦截器： 对所有当前请求进行拦截
+模块拦截器： 对特定模块进行拦截
+
+@app.route("/login")
+def login()
+    return "登录成功"
+
+@app.before_request
+def before():
+    url= request.path
+    return “”
+
+pass_path = ['/','/login',''reg]
+suffix = url.endswith('png')
+
+
+定制错误页面的错误
+@app.errorhandler(404/500) 404是输入网站，500是服务器崩溃
+    print(error)
+    return (“”)
+
+jinja2
+{% if article.count%w2==0 %}
+{%else%}
+{%endif%}
+
+
+{% set loopcount = variable/100%}
+{%set intLoopcount = loopcount | int %} |int 过滤器
+
+常用过滤器：
+<div> {{article.content} | safe}
+过滤器 |title |upper |lower
+搜索jinja2 c
+
+自定义过滤器 @app.template_filter('add')
+def add(input)  |add
+{% for}
+{%endfor%}
+
+
+#蓝图上下文处理器： html和python都要加
+@index.context_processor
+def my_func() #上下文处理器里面的返回值必须是字典结构
+    return {"title":"论"}
+
+#全局函数
+def
+
+app.jinja_env.globals.update(myadd=add2)
+
+在蓝图中调用函数:（限制）
+def my_func2():
+    def add():
+
+    return dict(my_add = add)
+
+
+ {%block content%}
+
+ {%endblock%}
+ -----
+ {% extend '../public/header.html'}
+ {% block content%}
+ {% endblock%}
+
+
+
+ORM框架 对增删改查封装 一个表就是一个对象 映射成对象 Object Relational Mapping
